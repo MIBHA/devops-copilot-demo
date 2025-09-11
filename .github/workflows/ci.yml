@@ -25,4 +25,11 @@ jobs:
         run: |
           docker build -t devops-copilot:${{ github.sha }} .
           docker tag devops-copilot:${{ github.sha }} devops-copilot:latest
+      - name: Run Trivy Container Scanner
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: 'devops-copilot:latest'
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
+          output: trivy-container-report.txt
 
